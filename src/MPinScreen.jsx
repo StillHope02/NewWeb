@@ -92,6 +92,8 @@ export default function MPinScreen() {
                         key={index}
                         id={`pin-${index}`}
                         type="password"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
                         maxLength="1"
                         value={digit}
                         onChange={(e) => handleChange(e, index)}
