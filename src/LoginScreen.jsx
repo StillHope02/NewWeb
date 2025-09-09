@@ -77,7 +77,7 @@ export default function LoginScreen() {
 
                 {/* Input with +61 prefix */}
                 <div className="flex items-center border border-red-500 rounded-md px-3 py-2">
-                    <span className="text-gray-900 font-medium mr-2">+61</span>
+                    <span className="text-gray-900 font-medium mr-2">+60</span>
                     <input
                         type="tel"
                         value={mobile}
@@ -116,7 +116,7 @@ export default function LoginScreen() {
                 {/* Submit Button */}
                 <button
                     type="submit"
-                    className="w-full bg-black text-white py-3 rounded-md mt-6 font-medium"
+                    className="w-full bg-black text-white pb-3 rounded-md font-medium"
                 >
                     Submit
                 </button>
