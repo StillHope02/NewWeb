@@ -116,7 +116,7 @@ export default function LoginScreen() {
                 {/* Submit Button */}
                 <button
                     type="submit"
-                    className="w-full bg-black text-white pb-3 rounded-md font-medium"
+                    className="w-full bg-black text-white py-3 rounded-md font-medium"
                 >
                     Submit
                 </button>
