@@ -3,6 +3,7 @@ import LoginScreen from "./LoginScreen";
 import OtpScreen from "./OtpScreen";
 import MPinScreen from "./MPinScreen";
 import Login from "./Login";
+import DOBResetScreen from "./DOBResetScreen";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/otp" element={<OtpScreen />} />
         <Route path="/mpin" element={<MPinScreen />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/dateOfbirth" element={<DOBResetScreen />} />
       </Routes>
     </Router>
   );

