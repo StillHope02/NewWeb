@@ -14,7 +14,7 @@ const DOBResetScreen = () => {
         },
         body: JSON.stringify({
           dob,
-          username, // optional — remove if not needed
+          username, 
         }),
       });
 
@@ -31,7 +31,7 @@ const DOBResetScreen = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex justify-center pt-10">
+    <div className="bg-gray-100 flex justify-center pt-10">
       <div className="bg-white shadow-md rounded-md p-4 w-80">
         {/* Heading */}
         <h2 className="text-base font-semibold text-center mb-3">
