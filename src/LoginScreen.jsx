@@ -71,12 +71,30 @@ export default function LoginScreen() {
             </div>
 
             <form onSubmit={handleSubmit} className="w-full max-w-md px-6 mt-12">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                 <div className="relative mt-6">
+                    <label
+                        className="absolute -top-3 text-red-500 left-6 bg-white px-2 text-sm font-medium text-gray-700"
+                    >
+                        Mobile Number
+                    </label>
+
+                    <div className="flex items-center border border-red-500 rounded-md px-3 py-2">
+                        <span className="text-gray-900 font-medium mr-2">+60</span>
+                        <input
+                            type="tel"
+                            value={mobile}
+                            onChange={handleChange}
+                            placeholder="Enter your number"
+                            className="flex-1 focus:outline-none"
+                        />
+                    </div>
+                </div>
+                {/* <label className="block text-sm font-medium text-gray-700 mb-1">
                     Mobile Number
                 </label>
 
                 {/* Input with +61 prefix */}
-                <div className="flex items-center border border-red-500 rounded-md px-3 py-2">
+                {/* <div className="flex items-center border border-red-500 rounded-md px-3 py-2">
                     <span className="text-gray-900 font-medium mr-2">+60</span>
                     <input
                         type="tel"
@@ -85,10 +103,10 @@ export default function LoginScreen() {
                         placeholder="Enter your number"
                         className="flex-1 focus:outline-none"
                     />
-                </div>
+                </div>  */}
 
                 {/* Error Message */}
-                {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
+                {error && <p className="text-red-500 text-xs text-center mt-1">{error}</p>}
 
                 <p className="text-gray-500 text-xs">
                     Enter your 9 to 10 digit mobile number
