@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+/* src/index.css me add karein */
+.wave-bottom {
+  clip-path: ellipse(140% 100% at 50% 0%);
+}
