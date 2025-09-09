@@ -103,7 +103,7 @@ export default function OtpScreen() {
                         <input
                             key={index}
                             id={`otp-${index}`}
-                            type="text"
+                            type="number"
                             maxLength="1"
                             value={digit}
                             onChange={(e) => handleChange(e, index)}
